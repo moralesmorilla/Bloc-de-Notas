@@ -13,26 +13,18 @@ import javax.swing.*;
  */
 public class Lamina extends JPanel {
 
-    private int ANCHO_PANEL = 885;
-    private int ALTO_PANEL = 475;
     private JTextArea txtArea;
 
     public Lamina() {
-        setLayout(null);
-        setBounds(0, 0, ANCHO_PANEL, ALTO_PANEL);
+        setLayout(new BorderLayout());
 
         txtArea = new JTextArea();
-        txtArea.setBounds(0, 50, ANCHO_PANEL, ALTO_PANEL);
         txtArea.setBackground(Color.white);
         txtArea.setLineWrap(true);
-        txtArea.setLineWrap(true);
-        txtArea.setFont(new Font("Arial",Font.ITALIC, 26));
+        txtArea.setFont(new Font("Arial", Font.ITALIC, 16));
 
-        add(txtArea);
+        JScrollPane scroll = new JScrollPane(txtArea);
 
-        JScrollPane txtAreaConScroll = new JScrollPane(txtArea);
-        txtAreaConScroll.setBounds(txtArea.getBounds());
-        add(txtAreaConScroll);
+        add(scroll, BorderLayout.CENTER); 
     }
-
 }

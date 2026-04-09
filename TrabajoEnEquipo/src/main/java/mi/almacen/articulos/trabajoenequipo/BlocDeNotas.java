@@ -10,6 +10,6 @@ package mi.almacen.articulos.trabajoenequipo;
  */
 public class BlocDeNotas {
     public static void main(String[] args) {
-        BlocDeNotasCentrado b = new BlocDeNotasCentrado();
+        BlocDeNotasInterfaz b = new BlocDeNotasInterfaz();
     }
 }
