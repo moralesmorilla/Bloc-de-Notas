@@ -15,14 +15,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.Buffer;
 
 public class BlocDeNotasInterfaz extends JFrame {
 
     private JMenuItem abrir, guardar, salir;
     private JMenu archivo, editar, paginas;
     private JMenuBar barra;
-    private Lamina lam; 
+    private Lamina laminaActual;
+    private Lamina lam;
 
     public BlocDeNotasInterfaz() {
         setSize(900, 500);
@@ -83,11 +89,15 @@ public class BlocDeNotasInterfaz extends JFrame {
             int resultado = chooser.showOpenDialog(null);
             if (resultado == JFileChooser.APPROVE_OPTION) {
                 File archivo = chooser.getSelectedFile();
-                System.out.println("Archivo abierto");
+                System.out.println("Archivo abierto " + archivo);
                 lam.setVisible(false);
-                Lamina lamina = new Lamina();
-                add(lamina);
-                setVisible(true);
+                if(laminaActual!=null){
+                    remove(laminaActual);
+                }
+                laminaActual = new Lamina();
+                laminaActual.cargarArchivo(archivo);
+                add(laminaActual);
+                
             } else {
                 System.out.println("Debes de seleccionar un archivo");
             }
@@ -96,10 +106,19 @@ public class BlocDeNotasInterfaz extends JFrame {
     }
 
     private class ManejadorGuardar implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Guardar");
+            JFileChooser chooser = new JFileChooser();
+            int resultado = chooser.showSaveDialog(null);
+            if(resultado==JFileChooser.APPROVE_OPTION){
+                File archivo= chooser.getSelectedFile();
+                try {
+                    laminaActual.guardarArchivo(archivo);
+                } catch (IOException ex) {
+                    System.getLogger(BlocDeNotasInterfaz.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                }
+            }
 
         }
     }
