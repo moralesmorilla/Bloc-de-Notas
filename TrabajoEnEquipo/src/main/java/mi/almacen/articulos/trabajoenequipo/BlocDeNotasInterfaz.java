@@ -13,8 +13,14 @@ import javax.swing.*;
  */
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class BlocDeNotasInterfaz extends JFrame {
+    private JMenuItem abrir,guardar,salir;
+    private JMenu archivo,editar,paginas;
+    private JMenuBar barra;
+    private int i=1;
 
     public BlocDeNotasInterfaz() {
         setSize(900, 500);
@@ -26,25 +32,24 @@ public class BlocDeNotasInterfaz extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Bloc de notas");
 
-        JMenuBar barra = new JMenuBar();
+        barra = new JMenuBar();
 
-        JMenu archivo = new JMenu("Archivo");
-        JMenu editar = new JMenu("Editar");
+        archivo = new JMenu("Archivo");
+//        editar = new JMenu("Editar");
+//        paginas = new JMenu("Paginas");
 
-        JMenuItem nuevo = new JMenuItem("Nuevo");
-        JMenuItem abrir = new JMenuItem("Abrir");
-        JMenuItem guardar = new JMenuItem("Guardar");
-        JMenuItem mayuscula =  new JMenuItem("Pasar a mayusculas");
-        JMenuItem minusculas =  new JMenuItem("Pasar a minusculas");
-        
-        archivo.add(nuevo);
+
+        abrir = new JMenuItem("Abrir");
+        guardar = new JMenuItem("Guardar");
+        salir = new JMenuItem("Salir");
+
         archivo.add(abrir);
         archivo.add(guardar);
-        editar.add(mayuscula);
-        editar.add(minusculas);
+        archivo.add(salir);
         
         barra.add(archivo);
-        barra.add(editar);
+//        barra.add(editar);
+//        barra.add(paginas);
 
         setJMenuBar(barra);
 
@@ -52,6 +57,34 @@ public class BlocDeNotasInterfaz extends JFrame {
         add(lam);
 
         setVisible(true);
+        
+        salir.addActionListener(new ManejadorSalir());
+        abrir.addActionListener(new ManejadorAbrir());
+        guardar.addActionListener(new ManejadorGuardar());
+    }
+    private class ManejadorSalir implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+                System.out.println("Salir");
+                System.exit(0);
+             
+        }
+    }
+    private class ManejadorAbrir implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+                System.out.println("Abrir");
+                
+             
+        }
+    }
+    private class ManejadorGuardar implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+                System.out.println("Guardar");
+                
+             
+        }
     }
 
     private void ponerIcono() {
@@ -59,4 +92,6 @@ public class BlocDeNotasInterfaz extends JFrame {
         Image img = tk.getImage("src/images/descarga.png");
         setIconImage(img);
     }
+    
+   
 }
