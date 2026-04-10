@@ -15,12 +15,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class BlocDeNotasInterfaz extends JFrame {
-    private JMenuItem abrir,guardar,salir;
-    private JMenu archivo,editar,paginas;
+
+    private JMenuItem abrir, guardar, salir;
+    private JMenu archivo, editar, paginas;
     private JMenuBar barra;
-    private int i=1;
+    private Lamina lam; 
 
     public BlocDeNotasInterfaz() {
         setSize(900, 500);
@@ -38,7 +40,6 @@ public class BlocDeNotasInterfaz extends JFrame {
 //        editar = new JMenu("Editar");
 //        paginas = new JMenu("Paginas");
 
-
         abrir = new JMenuItem("Abrir");
         guardar = new JMenuItem("Guardar");
         salir = new JMenuItem("Salir");
@@ -46,44 +47,60 @@ public class BlocDeNotasInterfaz extends JFrame {
         archivo.add(abrir);
         archivo.add(guardar);
         archivo.add(salir);
-        
+
         barra.add(archivo);
 //        barra.add(editar);
 //        barra.add(paginas);
 
         setJMenuBar(barra);
 
-        Lamina lam = new Lamina();
+        lam = new Lamina();
         add(lam);
 
         setVisible(true);
-        
+
         salir.addActionListener(new ManejadorSalir());
         abrir.addActionListener(new ManejadorAbrir());
         guardar.addActionListener(new ManejadorGuardar());
     }
-    private class ManejadorSalir implements ActionListener{
+
+    private class ManejadorSalir implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
-                System.out.println("Salir");
-                System.exit(0);
-             
+            System.out.println("Salir");
+            System.exit(0);
+
         }
     }
-    private class ManejadorAbrir implements ActionListener{
+
+    private class ManejadorAbrir implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
-                System.out.println("Abrir");
-                
-             
+            System.out.println("Abrir");
+            JFileChooser chooser = new JFileChooser();
+            int resultado = chooser.showOpenDialog(null);
+            if (resultado == JFileChooser.APPROVE_OPTION) {
+                File archivo = chooser.getSelectedFile();
+                System.out.println("Archivo abierto");
+                lam.setVisible(false);
+                Lamina lamina = new Lamina();
+                add(lamina);
+                setVisible(true);
+            } else {
+                System.out.println("Debes de seleccionar un archivo");
+            }
+
         }
     }
-    private class ManejadorGuardar implements ActionListener{
+
+    private class ManejadorGuardar implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
-                System.out.println("Guardar");
-                
-             
+            System.out.println("Guardar");
+
         }
     }
 
@@ -92,6 +109,5 @@ public class BlocDeNotasInterfaz extends JFrame {
         Image img = tk.getImage("src/images/descarga.png");
         setIconImage(img);
     }
-    
-   
+
 }

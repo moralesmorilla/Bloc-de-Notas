@@ -5,6 +5,7 @@
 package mi.almacen.articulos.trabajoenequipo;
 
 import java.awt.*;
+import java.io.File;
 import javax.swing.*;
 
 /**
@@ -27,4 +28,6 @@ public class Lamina extends JPanel {
 
         add(scroll, BorderLayout.CENTER); 
     }
+
+    
 }
