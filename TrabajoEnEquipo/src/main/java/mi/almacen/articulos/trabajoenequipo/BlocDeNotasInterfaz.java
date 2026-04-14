@@ -97,6 +97,8 @@ public class BlocDeNotasInterfaz extends JFrame {
                 laminaActual = new Lamina();
                 laminaActual.cargarArchivo(archivo);
                 add(laminaActual);
+                revalidate();
+                repaint();
                 
             } else {
                 System.out.println("Debes de seleccionar un archivo");
