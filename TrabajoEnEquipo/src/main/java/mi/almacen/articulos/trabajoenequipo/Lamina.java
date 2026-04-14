@@ -13,6 +13,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -47,6 +49,8 @@ public class Lamina extends JPanel {
         }
         txtArea.setText(contenido.toString());
     }
+    
+    
     
     public void guardarArchivo(File archivo) throws IOException{
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))){

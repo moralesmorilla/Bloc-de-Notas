@@ -74,7 +74,10 @@ public class BlocDeNotasInterfaz extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            
+                
             System.out.println("Salir");
+            
             System.exit(0);
 
         }
