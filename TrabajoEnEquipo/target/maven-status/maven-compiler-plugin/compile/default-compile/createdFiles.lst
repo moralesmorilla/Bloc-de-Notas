@@ -1,11 +1,25 @@
 mi\almacen\articulos\trabajoenequipo\BlocDeNotasInterfaz$ManejadorAbrir.class
+<<<<<<< HEAD
 mi\almacen\articulos\trabajoenequipo\EditorConDirtyBit$1.class
 mi\almacen\articulos\trabajoenequipo\EditorConDirtyBit$2.class
+=======
+<<<<<<< HEAD
+>>>>>>> 60578fa587d4fab6a0916593945835c79c899931
 mi\almacen\articulos\trabajoenequipo\filereader\FileReaderResources.class
 mi\almacen\articulos\trabajoenequipo\Lamina$1.class
 mi\almacen\articulos\trabajoenequipo\BlocDeNotas.class
 mi\almacen\articulos\trabajoenequipo\BlocDeNotasInterfaz$ManejadorGuardar.class
+<<<<<<< HEAD
 mi\almacen\articulos\trabajoenequipo\EditorConDirtyBit.class
+=======
+=======
+mi\almacen\articulos\trabajoenequipo\EditorConDirtyBit$1.class
+mi\almacen\articulos\trabajoenequipo\EditorConDirtyBit$2.class
+mi\almacen\articulos\trabajoenequipo\BlocDeNotas.class
+mi\almacen\articulos\trabajoenequipo\BlocDeNotasInterfaz$ManejadorGuardar.class
+mi\almacen\articulos\trabajoenequipo\EditorConDirtyBit.class
+>>>>>>> 6a4a500 (nuevo)
+>>>>>>> 60578fa587d4fab6a0916593945835c79c899931
 mi\almacen\articulos\trabajoenequipo\Lamina.class
 mi\almacen\articulos\trabajoenequipo\BlocDeNotasInterfaz.class
 mi\almacen\articulos\trabajoenequipo\BlocDeNotasInterfaz$ManejadorSalir.class

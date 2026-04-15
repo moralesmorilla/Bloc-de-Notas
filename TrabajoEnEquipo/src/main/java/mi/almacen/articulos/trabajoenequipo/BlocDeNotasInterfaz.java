@@ -1,37 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package mi.almacen.articulos.trabajoenequipo;
 
-import java.awt.*;
-import javax.swing.*;
-
-/**
- *
- * @author Usuario25
- */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.nio.Buffer;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class BlocDeNotasInterfaz extends JFrame {
 
     private JMenuItem abrir, guardar, salir;
-    private JMenu archivo, editar, paginas;
+    private JMenu archivo;
     private JMenuBar barra;
     private Lamina laminaActual;
     private Lamina lam;
     private boolean isDirty = false;
     private TextArea txtArea;
+
     private File archivoActual;
 
     public BlocDeNotasInterfaz() {
@@ -45,7 +31,6 @@ public class BlocDeNotasInterfaz extends JFrame {
         setTitle("Bloc de notas");
 
         barra = new JMenuBar();
-
         archivo = new JMenu("Archivo");
 
         abrir = new JMenuItem("Abrir");
@@ -69,10 +54,10 @@ public class BlocDeNotasInterfaz extends JFrame {
         abrir.addActionListener(new ManejadorAbrir());
         guardar.addActionListener(new ManejadorGuardar());
 
+
     }
 
     private class ManejadorSalir implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Salir");
@@ -89,12 +74,11 @@ public class BlocDeNotasInterfaz extends JFrame {
     }
 
     private class ManejadorAbrir implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Abrir");
             JFileChooser chooser = new JFileChooser();
             int resultado = chooser.showOpenDialog(null);
+
             if (resultado == JFileChooser.APPROVE_OPTION) {
                 File archivo = chooser.getSelectedFile();
                 System.out.println("Archivo abierto " + archivo);
@@ -107,11 +91,11 @@ public class BlocDeNotasInterfaz extends JFrame {
                 add(laminaActual);
                 revalidate();
                 repaint();
-
+                archivoActual = archivo;
+                lam.cargarArchivo(archivo);
             } else {
-                System.out.println("Debes de seleccionar un archivo");
+                System.out.println("Debes seleccionar un archivo");
             }
-
         }
     }
 
@@ -153,5 +137,4 @@ public class BlocDeNotasInterfaz extends JFrame {
         Image img = tk.getImage("src/images/descarga.png");
         setIconImage(img);
     }
-
 }
