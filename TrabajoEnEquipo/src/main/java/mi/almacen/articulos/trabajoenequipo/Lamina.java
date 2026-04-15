@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -50,8 +51,11 @@ public class Lamina extends JPanel {
         txtArea.setText(contenido.toString());
     }
     
+<<<<<<< HEAD
     
     
+=======
+>>>>>>> 6a4a500 (nuevo)
     public void guardarArchivo(File archivo) throws IOException{
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))){
             bw.write(txtArea.getText());
@@ -61,4 +65,8 @@ public class Lamina extends JPanel {
     }
 
     
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 6a4a500 (nuevo)
