@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.Buffer;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class BlocDeNotasInterfaz extends JFrame {
 
@@ -29,6 +30,9 @@ public class BlocDeNotasInterfaz extends JFrame {
     private JMenuBar barra;
     private Lamina laminaActual;
     private Lamina lam;
+    private boolean isDirty = false;
+    private TextArea txtArea;
+    private File archivoActual;
 
     public BlocDeNotasInterfaz() {
         setSize(900, 500);
@@ -43,8 +47,6 @@ public class BlocDeNotasInterfaz extends JFrame {
         barra = new JMenuBar();
 
         archivo = new JMenu("Archivo");
-//        editar = new JMenu("Editar");
-//        paginas = new JMenu("Paginas");
 
         abrir = new JMenuItem("Abrir");
         guardar = new JMenuItem("Guardar");
@@ -55,8 +57,6 @@ public class BlocDeNotasInterfaz extends JFrame {
         archivo.add(salir);
 
         barra.add(archivo);
-//        barra.add(editar);
-//        barra.add(paginas);
 
         setJMenuBar(barra);
 
@@ -68,17 +68,22 @@ public class BlocDeNotasInterfaz extends JFrame {
         salir.addActionListener(new ManejadorSalir());
         abrir.addActionListener(new ManejadorAbrir());
         guardar.addActionListener(new ManejadorGuardar());
+
     }
 
     private class ManejadorSalir implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            
-                
             System.out.println("Salir");
-            
-            System.exit(0);
+            if (lam.isDirty()) {
+                int opcion = JOptionPane.showConfirmDialog(BlocDeNotasInterfaz.this, "Hay cambios sin guardar,Quieres salir?",
+                        "Salir", JOptionPane.YES_NO_OPTION);
+                if (opcion == JOptionPane.NO_OPTION) {
+                    return;
+                }
+            }
+            dispose();
 
         }
     }
@@ -94,7 +99,7 @@ public class BlocDeNotasInterfaz extends JFrame {
                 File archivo = chooser.getSelectedFile();
                 System.out.println("Archivo abierto " + archivo);
                 lam.setVisible(false);
-                if(laminaActual!=null){
+                if (laminaActual != null) {
                     remove(laminaActual);
                 }
                 laminaActual = new Lamina();
@@ -102,7 +107,7 @@ public class BlocDeNotasInterfaz extends JFrame {
                 add(laminaActual);
                 revalidate();
                 repaint();
-                
+
             } else {
                 System.out.println("Debes de seleccionar un archivo");
             }
@@ -113,21 +118,36 @@ public class BlocDeNotasInterfaz extends JFrame {
     private class ManejadorGuardar implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Guardar");
-            JFileChooser chooser = new JFileChooser();
-            int resultado = chooser.showSaveDialog(null);
-            if(resultado==JFileChooser.APPROVE_OPTION){
-                File archivo= chooser.getSelectedFile();
-                try {
-                    laminaActual.guardarArchivo(archivo);
-                } catch (IOException ex) {
-                    System.getLogger(BlocDeNotasInterfaz.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-                }
-            }
+            try {
+                if (archivoActual != null) {
+                    lam.guardarArchivo(archivoActual);
+                    System.out.println("Guardado en archivo existente");
+                } else {
+                    JFileChooser chooser = new JFileChooser();
+                    FileNameExtensionFilter filtro =
+                    new FileNameExtensionFilter("Archivos de texto (*.txt)", "txt");
+                    chooser.setFileFilter(filtro);
+                    chooser.setAcceptAllFileFilterUsed(false);
+                    int resultado = chooser.showSaveDialog(null);
 
+                    if (resultado == JFileChooser.APPROVE_OPTION) {
+                        File archivo = chooser.getSelectedFile();
+
+                        if (!archivo.getName().toLowerCase().endsWith(".txt")) {
+                            archivo = new File(archivo.getAbsolutePath() + ".txt");
+                        }
+
+                        lam.guardarArchivo(archivo);
+                        archivoActual = archivo;
+
+                        System.out.println("Guardado en nuevo archivo .txt");
+                    }
+                }
+            } catch (IOException ex) {
+                System.out.println(ex);
+            }
         }
     }
-
     private void ponerIcono() {
         Toolkit tk = Toolkit.getDefaultToolkit();
         Image img = tk.getImage("src/images/descarga.png");
