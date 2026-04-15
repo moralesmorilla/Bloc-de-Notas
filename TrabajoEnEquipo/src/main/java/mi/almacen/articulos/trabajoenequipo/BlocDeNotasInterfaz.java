@@ -100,38 +100,40 @@ public class BlocDeNotasInterfaz extends JFrame {
     }
 
     private class ManejadorGuardar implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                if (archivoActual != null) {
-                    lam.guardarArchivo(archivoActual);
-                    System.out.println("Guardado en archivo existente");
-                } else {
-                    JFileChooser chooser = new JFileChooser();
-                    FileNameExtensionFilter filtro =
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        if (archivoActual != null) {
+            lam.guardarArchivo(archivoActual);
+            System.out.println("Guardado en archivo existente");
+
+        } else {
+
+            JFileChooser chooser = new JFileChooser();
+            FileNameExtensionFilter filtro =
                     new FileNameExtensionFilter("Archivos de texto (*.txt)", "txt");
-                    chooser.setFileFilter(filtro);
-                    chooser.setAcceptAllFileFilterUsed(false);
-                    int resultado = chooser.showSaveDialog(null);
 
-                    if (resultado == JFileChooser.APPROVE_OPTION) {
-                        File archivo = chooser.getSelectedFile();
+            chooser.setFileFilter(filtro);
+            chooser.setAcceptAllFileFilterUsed(false);
 
-                        if (!archivo.getName().toLowerCase().endsWith(".txt")) {
-                            archivo = new File(archivo.getAbsolutePath() + ".txt");
-                        }
+            int resultado = chooser.showSaveDialog(null);
 
-                        lam.guardarArchivo(archivo);
-                        archivoActual = archivo;
+            if (resultado == JFileChooser.APPROVE_OPTION) {
 
-                        System.out.println("Guardado en nuevo archivo .txt");
-                    }
+                File archivo = chooser.getSelectedFile();
+
+                if (!archivo.getName().toLowerCase().endsWith(".txt")) {
+                    archivo = new File(archivo.getAbsolutePath() + ".txt");
                 }
-            } catch (IOException ex) {
-                System.out.println(ex);
+
+                lam.guardarArchivo(archivo);
+                archivoActual = archivo;
+
+                System.out.println("Guardado en nuevo archivo .txt");
             }
         }
     }
+}
     private void ponerIcono() {
         Toolkit tk = Toolkit.getDefaultToolkit();
         Image img = tk.getImage("src/images/descarga.png");
