@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -53,6 +56,12 @@ public class BlocDeNotasInterfaz extends JFrame {
         salir.addActionListener(new ManejadorSalir());
         abrir.addActionListener(new ManejadorAbrir());
         guardar.addActionListener(new ManejadorGuardar());
+        addWindowListener(new WindowAdapter(){
+            
+            public void windowClosing(WindowEvent e){
+                salir.addActionListener(new ManejadorSalir());
+            }
+        });
 
 
     }
@@ -71,7 +80,12 @@ public class BlocDeNotasInterfaz extends JFrame {
             dispose();
 
         }
+        
+        
     }
+
+    
+    
 
     private class ManejadorAbrir implements ActionListener {
         @Override
