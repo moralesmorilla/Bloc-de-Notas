@@ -20,10 +20,10 @@ public class BlocDeNotasInterfaz extends JFrame {
     private Lamina lam;
     private boolean isDirty = false;
     private TextArea txtArea;
+    private Controlador control;
 
-    private File archivoActual;
-
-    public BlocDeNotasInterfaz() {
+    public BlocDeNotasInterfaz(Controlador control) {
+        this.control = control;
         setSize(900, 500);
         setLocationRelativeTo(null);
 
@@ -52,94 +52,61 @@ public class BlocDeNotasInterfaz extends JFrame {
         add(lam);
 
         setVisible(true);
+        
+        txtArea.
 
         salir.addActionListener(new ManejadorSalir());
         abrir.addActionListener(new ManejadorAbrir());
         guardar.addActionListener(new ManejadorGuardar());
-        addWindowListener(new WindowAdapter(){
-            @Override
-            public void windowClosing(WindowEvent e){
-                cerrarAplicacion();
-                
-            }
-        });
-
 
     }
-
-    private class ManejadorSalir implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-           cerrarAplicacion();
-
-        }
-        
-        
+    public boolean isDirty(){
+        return isDirty;
     }
-
     
     
 
+    public TextArea getTextArea() {
+        return txtArea;
+    }
+
+    public void setTxtArea(TextArea txtArea) {
+        this.txtArea = txtArea;
+    }
+    public Lamina getLam() {
+        return lam;
+    }
+    
     private class ManejadorAbrir implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e) {
-            cerrarAplicacion();
+        public void actionPerformed(ActionEvent e){
+            control.abrirFichero();
         }
     }
-
+    
+    private class ManejadorSalir implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            control.salirFichero();
+        }
+    }
+    
     private class ManejadorGuardar implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        if (archivoActual != null) {
-            lam.guardarArchivo(archivoActual);
-            System.out.println("Guardado en archivo existente");
-
-        } else {
-
-            JFileChooser chooser = new JFileChooser();
-            FileNameExtensionFilter filtro =
-                    new FileNameExtensionFilter("Archivos de texto (*.txt)", "txt");
-
-            chooser.setFileFilter(filtro);
-            chooser.setAcceptAllFileFilterUsed(false);
-
-            int resultado = chooser.showSaveDialog(null);
-
-            if (resultado == JFileChooser.APPROVE_OPTION) {
-
-                File archivo = chooser.getSelectedFile();
-
-                if (!archivo.getName().toLowerCase().endsWith(".txt")) {
-                    archivo = new File(archivo.getAbsolutePath() + ".txt");
-                }
-
-                lam.guardarArchivo(archivo);
-                archivoActual = archivo;
-
-                System.out.println("Guardado en nuevo archivo .txt");
-            }
+        @Override
+        public void actionPerformed(ActionEvent e){
+            control.guardarFichero();
         }
     }
-}
-    private void cerrarAplicacion() {
-    if (lam.isDirty()) {
-        int opcion = JOptionPane.showConfirmDialog(
-                this,
-                "Hay cambios sin guardar, ¿quieres salir?",
-                "Salir",
-                JOptionPane.YES_NO_OPTION);
+    
+    
+    
 
-        if (opcion == JOptionPane.NO_OPTION) {
-            return;
-        }
-        dispose();
-    }
-    dispose();
-}
     private void ponerIcono() {
         Toolkit tk = Toolkit.getDefaultToolkit();
         Image img = tk.getImage("src/images/descarga.png");
         setIconImage(img);
     }
+
+    
+    
 }
