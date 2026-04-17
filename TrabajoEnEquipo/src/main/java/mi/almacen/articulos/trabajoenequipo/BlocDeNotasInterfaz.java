@@ -30,7 +30,7 @@ public class BlocDeNotasInterfaz extends JFrame {
         ponerIcono();
         setResizable(true);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setTitle("Bloc de notas");
 
         barra = new JMenuBar();
@@ -57,9 +57,10 @@ public class BlocDeNotasInterfaz extends JFrame {
         abrir.addActionListener(new ManejadorAbrir());
         guardar.addActionListener(new ManejadorGuardar());
         addWindowListener(new WindowAdapter(){
-            
+            @Override
             public void windowClosing(WindowEvent e){
-                salir.addActionListener(new ManejadorSalir());
+                cerrarAplicacion();
+                
             }
         });
 
@@ -69,15 +70,7 @@ public class BlocDeNotasInterfaz extends JFrame {
     private class ManejadorSalir implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Salir");
-            if (lam.isDirty()) {
-                int opcion = JOptionPane.showConfirmDialog(BlocDeNotasInterfaz.this, "Hay cambios sin guardar,Quieres salir?",
-                        "Salir", JOptionPane.YES_NO_OPTION);
-                if (opcion == JOptionPane.NO_OPTION) {
-                    return;
-                }
-            }
-            dispose();
+           cerrarAplicacion();
 
         }
         
@@ -90,26 +83,7 @@ public class BlocDeNotasInterfaz extends JFrame {
     private class ManejadorAbrir implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JFileChooser chooser = new JFileChooser();
-            int resultado = chooser.showOpenDialog(null);
-
-            if (resultado == JFileChooser.APPROVE_OPTION) {
-                File archivo = chooser.getSelectedFile();
-                System.out.println("Archivo abierto " + archivo);
-                lam.setVisible(false);
-                if (laminaActual != null) {
-                    remove(laminaActual);
-                }
-                laminaActual = new Lamina();
-                laminaActual.cargarArchivo(archivo);
-                add(laminaActual);
-                revalidate();
-                repaint();
-                archivoActual = archivo;
-                lam.cargarArchivo(archivo);
-            } else {
-                System.out.println("Debes seleccionar un archivo");
-            }
+            cerrarAplicacion();
         }
     }
 
@@ -147,6 +121,21 @@ public class BlocDeNotasInterfaz extends JFrame {
             }
         }
     }
+}
+    private void cerrarAplicacion() {
+    if (lam.isDirty()) {
+        int opcion = JOptionPane.showConfirmDialog(
+                this,
+                "Hay cambios sin guardar, ¿quieres salir?",
+                "Salir",
+                JOptionPane.YES_NO_OPTION);
+
+        if (opcion == JOptionPane.NO_OPTION) {
+            return;
+        }
+        dispose();
+    }
+    dispose();
 }
     private void ponerIcono() {
         Toolkit tk = Toolkit.getDefaultToolkit();
