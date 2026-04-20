@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 mi\almacen\articulos\trabajoenequipo\filereader\FileReaderResources.class
 mi\almacen\articulos\trabajoenequipo\BlocDeNotasInterfaz$2.class
 mi\almacen\articulos\trabajoenequipo\BlocDeNotas.class
@@ -11,3 +12,15 @@ mi\almacen\articulos\trabajoenequipo\Lamina.class
 mi\almacen\articulos\trabajoenequipo\BlocDeNotasInterfaz.class
 mi\almacen\articulos\trabajoenequipo\BlocDeNotasInterfaz$ManejadorSalir.class
 mi\almacen\articulos\trabajoenequipo\BlocDeNotasInterfaz$1.class
+=======
+<<<<<<< HEAD
+mi\almacen\articulos\trabajoenequipo\filereader\EditorPanel$1.class
+mi\almacen\articulos\trabajoenequipo\filereader\BlocDeNotasControlador.class
+mi\almacen\articulos\trabajoenequipo\filereader\EditorPanel.class
+mi\almacen\articulos\trabajoenequipo\filereader\ArchivoServicio.class
+mi\almacen\articulos\trabajoenequipo\filereader\BlocDeNotasApp.class
+mi\almacen\articulos\trabajoenequipo\filereader\BlocDeNotasVista$1.class
+mi\almacen\articulos\trabajoenequipo\filereader\BlocDeNotasVista.class
+=======
+>>>>>>> f5a50062b65eab050099bfdbfc188e140e4ec21e
+>>>>>>> f5d135ca00f8f8dc45a6bf4b910fbcca198fae9a

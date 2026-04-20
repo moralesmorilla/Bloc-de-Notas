@@ -4,23 +4,16 @@
  */
 package mi.almacen.articulos.trabajoenequipo.filereader;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-
 /**
  *
  * @author Usuario25
  */
-public class FileReaderResources {
-        FileReader fr;
-        BufferedReader br;
 
-   
-        
-        
+public class BlocDeNotasApp {
+    public static void main(String[] args) {
+        BlocDeNotasVista vista = new BlocDeNotasVista();
+        BlocDeNotasControlador controlador = new BlocDeNotasControlador(vista);
+        vista.setControlador(controlador);
 
-        
-    
+    }
 }
