@@ -6,12 +6,13 @@ package mi.almacen.articulos.trabajoenequipo.filereader;
 
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.DocumentEvent;
 
 /**
  *
  * @author Usuario25
  */
-
 public class EditorPanel extends JPanel {
 
     private JTextArea txtArea;
@@ -26,15 +27,18 @@ public class EditorPanel extends JPanel {
         txtArea.setFont(new Font("Arial", Font.PLAIN, 16));
 
         txtArea.getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(e) {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
                 isDirty = true;
             }
 
-            public void removeUpdate(e) {
+            @Override
+            public void removeUpdate(DocumentEvent e) {
                 isDirty = true;
             }
 
-            public void changedUpdate(e) {
+            @Override
+            public void changedUpdate(DocumentEvent e) {
                 isDirty = true;
             }
         });
