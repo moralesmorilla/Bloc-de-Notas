@@ -16,15 +16,13 @@ import java.io.IOException;
  * @author Usuario25
  */
 public class AccesoFichero {
-    private Controlador controlador;
     private File archivoActual;
     private File archivo;
     private boolean isDirty;
     
     
     public AccesoFichero(){
-        controlador = new Controlador();
-        
+       
     }
     
     public void markDirty() {
@@ -55,7 +53,7 @@ public class AccesoFichero {
         this.archivo = archivo;
     }
     
-    public void cargarArchivo(File archivo) {
+    public String abrirArchivo(File archivo) {
         StringBuilder contenido = new StringBuilder();
 
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
@@ -67,19 +65,20 @@ public class AccesoFichero {
             e.printStackTrace();
         }
         
-        controlador.getTextArea().setText(contenido.toString());
         isDirty = false;
         archivoActual = archivo;
+        return contenido.toString();
     }
 
-    public void guardarArchivo(File archivo) {
+    public void guardarArchivo(File archivo,String texto) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
-            bw.write(controlador.getTextArea().getText());
+            bw.write(texto);
             isDirty = false;
             archivoActual = archivo;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
     }
     
     

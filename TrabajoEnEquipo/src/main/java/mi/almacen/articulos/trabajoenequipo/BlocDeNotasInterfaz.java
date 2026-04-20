@@ -18,7 +18,6 @@ public class BlocDeNotasInterfaz extends JFrame {
     private JMenuBar barra;
     private Lamina laminaActual;
     private Lamina lam;
-    private boolean isDirty = false;
     private TextArea txtArea;
     private Controlador control;
 
@@ -26,13 +25,22 @@ public class BlocDeNotasInterfaz extends JFrame {
         this.control = control;
         setSize(900, 500);
         setLocationRelativeTo(null);
-
         ponerIcono();
         setResizable(true);
-
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setTitle("Bloc de notas");
 
+        
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                control.salirFichero();
+            }
+        });
+
+        
         barra = new JMenuBar();
         archivo = new JMenu("Archivo");
 
@@ -43,28 +51,26 @@ public class BlocDeNotasInterfaz extends JFrame {
         archivo.add(abrir);
         archivo.add(guardar);
         archivo.add(salir);
-
         barra.add(archivo);
-
         setJMenuBar(barra);
 
+        
         lam = new Lamina();
+        lam.setObservadorTexto(new ObservadorTexto() {
+            @Override
+            public void modificarTexto() {
+                control.textoModificado();
+            }
+        });
         add(lam);
 
-        setVisible(true);
-        
-        txtArea.
-
-        salir.addActionListener(new ManejadorSalir());
         abrir.addActionListener(new ManejadorAbrir());
         guardar.addActionListener(new ManejadorGuardar());
 
+        salir.addActionListener(e -> control.salirFichero());
+
+        setVisible(true);
     }
-    public boolean isDirty(){
-        return isDirty;
-    }
-    
-    
 
     public TextArea getTextArea() {
         return txtArea;
@@ -73,33 +79,42 @@ public class BlocDeNotasInterfaz extends JFrame {
     public void setTxtArea(TextArea txtArea) {
         this.txtArea = txtArea;
     }
+
     public Lamina getLam() {
         return lam;
     }
-    
+
+    public String getContenido() {
+        return lam.getTextoLamina();
+    }
+
+    public void setContenido(String nuevoTexto) {
+        lam.setTextoLamina(nuevoTexto);
+    }
+
     private class ManejadorAbrir implements ActionListener {
+
         @Override
-        public void actionPerformed(ActionEvent e){
+        public void actionPerformed(ActionEvent e) {
             control.abrirFichero();
         }
     }
-    
+
     private class ManejadorSalir implements ActionListener {
+
         @Override
-        public void actionPerformed(ActionEvent e){
+        public void actionPerformed(ActionEvent e) {
             control.salirFichero();
         }
     }
-    
+
     private class ManejadorGuardar implements ActionListener {
+
         @Override
-        public void actionPerformed(ActionEvent e){
+        public void actionPerformed(ActionEvent e) {
             control.guardarFichero();
         }
     }
-    
-    
-    
 
     private void ponerIcono() {
         Toolkit tk = Toolkit.getDefaultToolkit();
@@ -107,6 +122,4 @@ public class BlocDeNotasInterfaz extends JFrame {
         setIconImage(img);
     }
 
-    
-    
 }

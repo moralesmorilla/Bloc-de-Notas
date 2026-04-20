@@ -18,73 +18,89 @@ import javax.swing.*;
 public class Controlador {
     private BlocDeNotasInterfaz b;
     private AccesoFichero fichero;
-    private Lamina lam;
-    private TextArea tArea;
-    
     
     
     
     public void iniciar() {
         b = new BlocDeNotasInterfaz(this);
-        lam=b.getLam();
+        fichero=new AccesoFichero();
     }
     
-    public String getTextArea(){
-        return b.getTextArea().getText();
+    public void setTextArea(TextArea TextArea){
+        b.setTxtArea(TextArea);
     }
     
+    public void textoModificado(){
+        if(fichero!=null){
+            fichero.markDirty();
+        }
+    }
 
     public void guardarFichero() {
-        if (fichero.getArchivo() != null) {
-                
-                fichero.guardarArchivo(fichero.getArchivo());
-                System.out.println("Guardado en archivo existente");
+        String textoGuardar=b.getContenido();
+        File archivo=fichero.getArchivoActual();
+        
+        if(archivo!=null){
+            fichero.guardarArchivo(archivo, textoGuardar);
+            System.out.println("Guardado en archivo existente");
+        }else{
+            JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de texto (*.txt)", "txt");
+        chooser.setFileFilter(filtro);
+        chooser.setAcceptAllFileFilterUsed(false);
 
-            } else {
+        int resultado = chooser.showSaveDialog(null);
 
-                JFileChooser chooser = new JFileChooser();
-                FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de texto (*.txt)", "txt");
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            archivo = chooser.getSelectedFile();
 
-                chooser.setFileFilter(filtro);
-                chooser.setAcceptAllFileFilterUsed(false);
-
-                int resultado = chooser.showSaveDialog(null);
-
-                if (resultado == JFileChooser.APPROVE_OPTION) {
-
-                    File archivo = chooser.getSelectedFile();
-
-                    if (!archivo.getName().toLowerCase().endsWith(".txt")) {
-                        archivo = new File(archivo.getAbsolutePath() + ".txt");
-                    }
-
-                    fichero.guardarArchivo(archivo);
-                    fichero.setArchivoActual(archivo);
-
-                    System.out.println("Guardado en nuevo archivo .txt");
-                }
+            if (!archivo.getName().toLowerCase().endsWith(".txt")) {
+                archivo = new File(archivo.getAbsolutePath() + ".txt");
             }
+
+            // Le damos el archivo nuevo y el texto al mensajero
+            fichero.guardarArchivo(archivo, textoGuardar);
+            
+            fichero.setArchivoActual(archivo); 
+
+            System.out.println("Guardado en nuevo archivo .txt");
+        }
+        }
         
     }
     public void abrirFichero(){
-        if()
+        JFileChooser chooser = new JFileChooser();
+        int resultado = chooser.showOpenDialog(null);
+        if(resultado== JFileChooser.APPROVE_OPTION){
+            File archivoAbrir = chooser.getSelectedFile();
+            String textoArchivo= fichero.abrirArchivo(archivoAbrir);
+            b.setContenido(textoArchivo);
+        }else{
+            return;
+        } 
+    }
+    
+    public void salirFichero() {
+    
+    if (fichero.isDirty()) {
+        int respuesta = JOptionPane.showConfirmDialog(null, 
+                "¿Desea guardar los cambios antes de salir?", 
+                "Salir", 
+                JOptionPane.YES_NO_CANCEL_OPTION);
+                
+        if (respuesta == JOptionPane.YES_OPTION) {
+            guardarFichero();
+            System.exit(0);
+        } else if (respuesta == JOptionPane.NO_OPTION) {
+            System.exit(0);
             
+        } else {
+            return;
+        }
         
+    } else {
+       System.exit(0);
     }
-    
-    public void salirFichero(){
-        
-        
-    }
-
-    
-    public void setLam(Lamina lam) {
-        this.lam = lam;
-    }
-
-    
-    
-    
-   
+}
     
 }

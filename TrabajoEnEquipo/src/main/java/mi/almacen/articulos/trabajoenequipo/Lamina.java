@@ -9,6 +9,7 @@ import javax.swing.event.DocumentListener;
 public class Lamina extends JPanel {
 
     private JTextArea txtArea;
+    private ObservadorTexto observador;
     private boolean isDirty = false;
 
     public Lamina() {
@@ -25,26 +26,40 @@ public class Lamina extends JPanel {
         txtArea.getDocument().addDocumentListener(new DocumentListener(){
             @Override
             public void insertUpdate(DocumentEvent e) {
-                markDirty();
+                avisar();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                markDirty();
+                avisar();
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                markDirty();
+                avisar();
             }
-            private void markDirty(){
-                isDirty=true;
-            }
+            
         });
         
        
 
-        };
+        }
+    public String getTextoLamina(){
+        return txtArea.getText();
+    }
+    public void setTextoLamina(String nuevoTexto){
+        txtArea.setText(nuevoTexto);
+    }
+    
+    public void setObservadorTexto(ObservadorTexto obs){
+        this.observador=obs;
+    }
+    
+    private void avisar(){
+        if(observador!=null){
+            observador.modificarTexto();
+        }
+    }
     }
 
     
