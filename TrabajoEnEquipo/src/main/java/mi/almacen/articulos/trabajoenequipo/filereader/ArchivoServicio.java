@@ -21,8 +21,7 @@ public class ArchivoServicio {
                 contenido.append(linea).append("\n");
             }
         } catch (IOException e) {
-            e.printStackTrace();
-        }
+            System.out.println(e);        }
 
         return contenido.toString();
     }
@@ -31,7 +30,6 @@ public class ArchivoServicio {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
             bw.write(texto);
         } catch (IOException e) {
-            e.printStackTrace();
-        }
+            System.out.println(e);        }
     }
 }

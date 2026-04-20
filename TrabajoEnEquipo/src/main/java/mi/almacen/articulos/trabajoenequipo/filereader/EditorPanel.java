@@ -25,16 +25,16 @@ public class EditorPanel extends JPanel {
         txtArea.setWrapStyleWord(true);
         txtArea.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        txtArea.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
-            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+        txtArea.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(e) {
                 isDirty = true;
             }
 
-            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+            public void removeUpdate(e) {
                 isDirty = true;
             }
 
-            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+            public void changedUpdate(e) {
                 isDirty = true;
             }
         });

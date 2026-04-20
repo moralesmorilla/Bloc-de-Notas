@@ -49,7 +49,6 @@ public class BlocDeNotasVista extends JFrame {
         return editor;
     }
 
-    // 👉 Conectar controlador para la X
     public void setControlador(BlocDeNotasControlador controlador) {
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override

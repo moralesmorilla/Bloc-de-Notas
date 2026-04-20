@@ -50,7 +50,6 @@ public class BlocDeNotasControlador {
                 if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
                     archivoActual = chooser.getSelectedFile();
 
-                    // 👉 asegurar extensión .txt
                     if (!archivoActual.getName().toLowerCase().endsWith(".txt")) {
                         archivoActual = new File(archivoActual.getAbsolutePath() + ".txt");
                     }
@@ -63,8 +62,7 @@ public class BlocDeNotasControlador {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
-        }
+            System.out.println(e);        }
     }
 
     // 👉 método usado por botón salir y la X
